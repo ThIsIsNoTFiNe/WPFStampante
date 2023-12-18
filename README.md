@@ -7,7 +7,7 @@ la classe *enum* serve semplicemente per dare un valore ai vari colori in modo c
 ricordo che il file è stato reso persistente grazie all'utilizzo di un file .xml
 ## Spiegazione:
 
-Abbiamo creato due classi una chiamata *stampante* e una *pagina*. Dentro la *stampante* ci si trova solamente  la inizializzazione dei colori;
+Abbiamo creato due classi una chiamata *stampante* e una *pagina*. Dentro la *stampante* ci si trova solamente  la inizializzazione dei colori e la resa persostente del file;
 
 ```C#
 public class Stampante
@@ -132,7 +132,35 @@ public class Pagina
     }
 }
 ```
+Sempre presente nella classe *Stampante*, i metodi aggiunti per rendere il file persistente
+```C#
+public void SalvaStato(string percorso)
+{
+    //creo un oggetto che indirizzerò al file .xml
+    using (StreamWriter sw = new StreamWriter(percorso))
+    {
+        //creo un nuovo oggetto ("XmlSerializer") di tipo stampante (specificato grazie typeof)
+        //con serialize per scrivere l'istanza della classe Stampante in un file .Xml
+        XmlSerializer serializer = new XmlSerializer(typeof(Stampante));
+        serializer.Serialize(sw, this);
+    }
+}
 
+// Metodo per caricare lo stato della stampante da un file XML
+public static Stampante CaricaStato(string percorso)
+{   
+    //creo un nuovo oggetto (sr) che indirizzerò ak file .xml
+    using (StreamReader sr = new StreamReader(percorso))
+    {
+        //Creo un nuovo oggetto di tipo stampante
+        XmlSerializer serializer = new XmlSerializer(typeof(Stampante));
+        //ritorno in output , grazie a deserialize i contenuti di "sr"
+        return (Stampante)serializer.Deserialize(sr);
+    }
+}
+```
 # Rappresentazione UML della classe 
 <img src= "https://github.com/ThIsIsNoTFiNe/WPFStampante/assets/127590111/f910b150-3a7d-4f2f-aa0b-773a6b4059e5">
 <img src= "https://github.com/ThIsIsNoTFiNe/WPFStampante/assets/127590111/2a0ff9b2-b15c-4ad1-9064-16fdefb997f1">
+
+la parte Xaml varrà aggiunta in futuro
