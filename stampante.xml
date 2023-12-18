@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Stampante>
+    <Ciano>100</Ciano>
+    <Magenta>100</Magenta>
+    <Yellow>100</Yellow>
+    <Black>100</Black>
+    <Fogli>0</Fogli>
+</Stampante>
